@@ -1,0 +1,89 @@
+#1. Write SQL queries for table creation for data model that you crated for prev homework (AirBnb model)
+postgres=# \dt
+                ╤яшёюъ юЄэю°хэшщ
+ ╤їхьр  |        ╚ь         |   ╥шя   | ┬ырфхыхЎ
+--------+-------------------+---------+----------
+ public | Guest             | ЄрсышЎр | postgres
+ public | Hosts             | ЄрсышЎр | postgres
+ public | Payment           | ЄрсышЎр | postgres
+ public | Reservations      | ЄрсышЎр | postgres
+ public | Reviews_for_hosts | ЄрсышЎр | postgres
+ public | Reviews_for_room  | ЄрсышЎр | postgres
+ public | Rooms             | ЄрсышЎр | postgres
+(7 ёЄЁюъ)
+
+#2. Write 3 rows (using INSERT queries) for each table in the data model
+
+postgres=# SELECT * FROM "Guest";
+ Guest_id | username |      email      |   password    | phone_number
+----------+----------+-----------------+---------------+--------------
+        1 | Anzhela  | anzh@gmail.com  | 12345         |    672503749
+        2 | Masha    | masha@gmail.com | 76437password |    504352755
+        3 | Roma     | roma@gmail.com  | password123   |    984367411
+(3 ёЄЁюъш)
+
+
+postgres=# SELECT * FROM "Hosts";
+ id_host | name  |     email      | password | phone_number
+---------+-------+----------------+----------+--------------
+       1 | David | DAv@gmail.com  | zxcvbnm  |    682905647
+       2 | Lisa  | lisa@gmail.com | 7777     |    682904577
+       3 | Anna  | anna@gmail.com | 0779     |    683984577
+(3 ёЄЁюъш)
+
+
+postgres=# SELECT * FROM "Payment";
+ payment_id | Guest_id | payment_date | amount | payment_status
+------------+----------+--------------+--------+----------------
+          1 |        1 | 2023-06-15   |    500 | Paid
+          2 |        2 | 2023-07-30   |   1500 | Paid
+          3 |        3 | 2023-08-20   |    400 | Paid
+(3 ёЄЁюъш)
+
+
+postgres=# SELECT * FROM "Reservations";
+ reservation_id | Guest_id | id_room | number_of_guest | check_in_date | check_out_date | total_price |  status
+----------------+----------+---------+-----------------+---------------+----------------+-------------+-----------
+              1 |        1 |       1 |               2 | 2023-06-05    | 2023-06-10     |         500 | Confirmed
+              2 |        2 |       2 |               6 | 2023-07-15    | 2023-07-20     |        1500 | Confirmed
+              3 |        3 |       3 |               1 | 2023-08-10    | 2023-08-15     |         400 | Confirmed
+(3 ёЄЁюъш)
+
+
+postgres=# SELECT * FROM "Reviews_for_hosts";
+ review_host_id | Guest_id | rating |                     comment
+----------------+----------+--------+-------------------------------------------------
+              1 |        1 |      5 | David was a great host and very helpful.
+              2 |        2 |      4 | Lisa was friendly
+              3 |        3 |      4 | Anna provided excellent servive during our stay
+(3 ёЄЁюъш)
+
+
+postgres=# SELECT * FROM "Reviews_for_room";
+ review_room_id | Guest_id | rating |                     comment                     | date_review
+----------------+----------+--------+-------------------------------------------------+-------------
+              1 |        1 |      4 | Great location and comfortable stay.            | 2023-06-12
+              2 |        2 |      5 | Amazing villa with excellent amenities.         | 2023-07-25
+              3 |        3 |      4 | Nice studio apartment in a convenient location. | 2023-08-18
+(3 ёЄЁюъш)
+
+
+postgres=# SELECT * FROM "Rooms";
+ id_room | host_id |           description            | max_number_of_guest | price | air_conditioning | Wifi | refrigerator | raiting | is_availability
+---------+---------+----------------------------------+---------------------+-------+------------------+------+--------------+---------+-----------------
+       1 |       1 | Cozy apartment near the beach    |                   4 |   100 | Yes              | Yes  | Yes          |       4 | t
+       2 |       1 | Spacious villa with a pool       |                   8 |   250 | Yes              | Yes  | Yes          |       5 | t
+       3 |       2 | Modern studio in the city center |                   2 |    80 | Yes              | Yes  | Yes          |       4 | t
+(3 ёЄЁюъш)
+
+#3. Create next analytic queries: Find a user who had biggest amount of reservation. Return user name and user_id
+postgres=# SELECT "Guest"."Guest_id", "Guest"."username"
+postgres-# FROM "Guest"
+postgres-# JOIN "Reservations" ON "Guest"."Guest_id" = "Reservations"."Guest_id"
+postgres-# GROUP BY "Guest"."Guest_id", "Guest"."username"
+postgres-# ORDER BY COUNT("Reservations"."reservation_id") DESC
+postgres-# LIMIT 1;
+ Guest_id | username
+----------+----------
+        2 | Masha
+(1 ёЄЁюър)
