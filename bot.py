@@ -26,7 +26,6 @@ def handle_request_type(message):
         case "Заявка на інше":
             bot.send_message(message.chat.id, "Напишіть текст заявки або прикріпіть фото, місцезнаходження або надішліть файл:")
 
-    # Обробка якихось додаткових деталей до заявки
     @bot.message_handler(func=lambda message: True)
     def handle_request_details(message):
         additional_info = message.text
