@@ -13,7 +13,6 @@ def handle_new_request(message):
 def handle_request_type(message):
     request_type = message.text
     user_id = message.from_user.id
-
     match request_type:
         case "Пропуск таксі":
             bot.send_message(message.chat.id, "Введіть номер автомобіля таксі:")
